@@ -5,29 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080b16">
 
-<title>FOROS EXTREME - Play Testing Portal</title>
+<title>FOROS EXTREME - Closed Testing</title>
 
 <style>
 :root{
     --bg:#070a13;
-    --panel:#111827;
-    --panel2:#0c1220;
-    --border:#27324b;
-    --text:#fff;
-    --muted:#8d98b0;
+    --card:#111827;
+    --card2:#0c1220;
+    --border:#27324a;
+    --text:#ffffff;
+    --muted:#8e99b0;
     --primary:#7357ff;
-    --primary2:#4ca7ff;
-    --cyan:#00d9c0;
-    --green:#42e5a4;
+    --blue:#4ca7ff;
+    --green:#00c896;
     --red:#ff5577;
     --yellow:#ffc857;
-    --shadow:0 25px 80px rgba(0,0,0,.45);
 }
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 html{
@@ -37,8 +35,8 @@ html{
 body{
     min-height:100vh;
     background:
-        radial-gradient(circle at 10% 0%,rgba(115,87,255,.25),transparent 32%),
-        radial-gradient(circle at 90% 100%,rgba(0,217,192,.14),transparent 35%),
+        radial-gradient(circle at 10% 0%,rgba(115,87,255,.22),transparent 30%),
+        radial-gradient(circle at 90% 100%,rgba(0,200,150,.13),transparent 30%),
         var(--bg);
     color:var(--text);
     font-family:Arial,Helvetica,sans-serif;
@@ -46,7 +44,7 @@ body{
 
 button,
 input{
-    font:inherit;
+    font-family:inherit;
 }
 
 button{
@@ -54,63 +52,70 @@ button{
 }
 
 .hidden{
-    display:none!important;
+    display:none !important;
+}
+
+/* FIX: IDs must also be able to hide */
+#loader.hidden,
+#gate.hidden,
+#dashboard.hidden{
+    display:none !important;
 }
 
 .container{
-    width:min(1200px,92%);
+    width:92%;
+    max-width:1200px;
     margin:auto;
 }
 
-/* ==============================
-   LOADER
-============================== */
+/* LOADER */
 
 #loader{
     position:fixed;
     inset:0;
     z-index:99999;
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     background:#070a13;
+}
+
+.loader-content{
+    text-align:center;
 }
 
 .loader-logo{
     width:85px;
     height:85px;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:center;
     border-radius:25px;
-    background:linear-gradient(135deg,var(--primary),var(--cyan));
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:auto;
+    background:linear-gradient(135deg,var(--primary),var(--green));
     font-size:26px;
     font-weight:900;
-    animation:pulse 1.4s infinite;
+    animation:pulse 1.3s infinite;
 }
 
-.loader p{
+.loader-content p{
     color:var(--muted);
-    margin-top:16px;
-    text-align:center;
+    margin-top:15px;
 }
 
 @keyframes pulse{
     50%{
         transform:scale(1.08);
-        box-shadow:0 0 45px rgba(115,87,255,.55);
+        box-shadow:0 0 45px rgba(115,87,255,.5);
     }
 }
 
-/* ==============================
-   BUTTONS
-============================== */
+/* BUTTON */
 
 .btn{
     border:0;
     border-radius:12px;
-    padding:12px 17px;
+    padding:13px 17px;
     color:white;
     font-weight:700;
     transition:.2s;
@@ -120,49 +125,47 @@ button{
     transform:translateY(-2px);
 }
 
-.btn-primary{
-    background:linear-gradient(135deg,var(--primary),var(--primary2));
+.primary{
+    background:linear-gradient(135deg,var(--primary),var(--blue));
 }
 
-.btn-success{
-    background:linear-gradient(135deg,#00b894,#00cec9);
+.success{
+    background:linear-gradient(135deg,#00a878,#00d4b5);
 }
 
-.btn-dark{
+.dark{
     background:#202941;
 }
 
-.btn-danger{
-    background:#351c28;
-    color:#ff8099;
+.danger{
+    background:#351d29;
+    color:#ff8199;
 }
 
-.btn-warning{
-    background:#40351c;
-    color:#ffd35f;
+.warning{
+    background:#3d331a;
+    color:#ffd45c;
 }
 
 .full{
     width:100%;
 }
 
-/* ==============================
-   INPUT
-============================== */
+/* INPUT */
 
 input{
     width:100%;
+    padding:13px 14px;
+    border-radius:11px;
+    border:1px solid var(--border);
     background:#080d19;
     color:#fff;
-    border:1px solid var(--border);
-    border-radius:11px;
-    padding:13px 14px;
     outline:none;
 }
 
 input:focus{
     border-color:var(--primary);
-    box-shadow:0 0 0 3px rgba(115,87,255,.13);
+    box-shadow:0 0 0 3px rgba(115,87,255,.12);
 }
 
 label{
@@ -173,12 +176,10 @@ label{
 }
 
 .form-group{
-    margin-bottom:14px;
+    margin-bottom:15px;
 }
 
-/* ==============================
-   GROUP GATE
-============================== */
+/* GATE */
 
 #gate{
     min-height:100vh;
@@ -190,17 +191,16 @@ label{
 
 .gate-card{
     width:100%;
-    max-width:540px;
-    background:rgba(17,24,39,.92);
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:28px;
+    max-width:520px;
     padding:38px;
     text-align:center;
-    box-shadow:var(--shadow);
-    backdrop-filter:blur(16px);
+    border-radius:28px;
+    background:rgba(17,24,39,.95);
+    border:1px solid var(--border);
+    box-shadow:0 25px 80px rgba(0,0,0,.5);
 }
 
-.logo{
+.main-logo{
     width:95px;
     height:95px;
     margin:0 auto 20px;
@@ -208,39 +208,39 @@ label{
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,var(--primary),var(--cyan));
+    background:linear-gradient(135deg,var(--primary),var(--green));
     font-size:28px;
     font-weight:900;
 }
 
 .gate-card h1{
-    font-size:31px;
-    margin-bottom:9px;
+    font-size:30px;
+    margin-bottom:10px;
 }
 
 .gate-card p{
     color:var(--muted);
     line-height:1.7;
-    margin-bottom:22px;
+    margin-bottom:20px;
 }
 
 .group-box{
-    padding:20px;
     background:#080d19;
     border:1px solid var(--border);
+    padding:19px;
     border-radius:17px;
     margin-bottom:18px;
 }
 
-.group-title{
-    font-size:11px;
+.group-label{
     color:var(--muted);
+    font-size:11px;
 }
 
 .group-email{
-    color:#69e7ff;
+    color:#6fe7ff;
     font-weight:800;
-    margin-top:7px;
+    margin-top:8px;
     word-break:break-all;
 }
 
@@ -250,15 +250,13 @@ label{
 }
 
 .note{
-    color:#67728b;
+    color:#667189;
     font-size:11px;
     line-height:1.6;
-    margin-top:16px;
+    margin-top:17px;
 }
 
-/* ==============================
-   HEADER
-============================== */
+/* HEADER */
 
 header{
     height:72px;
@@ -273,14 +271,14 @@ header{
 .header-inner{
     height:100%;
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
 }
 
 .brand{
     display:flex;
     align-items:center;
-    gap:11px;
+    gap:10px;
     font-weight:900;
 }
 
@@ -291,32 +289,30 @@ header{
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,var(--primary),var(--cyan));
+    background:linear-gradient(135deg,var(--primary),var(--green));
 }
 
 .header-actions{
     display:flex;
-    gap:7px;
+    gap:8px;
 }
 
-/* ==============================
-   MAIN
-============================== */
+/* MAIN */
 
 main{
-    padding:32px 0 60px;
+    padding:32px 0 50px;
 }
 
 .hero{
     display:grid;
-    grid-template-columns:1fr 170px;
+    grid-template-columns:1fr 150px;
     gap:25px;
     align-items:center;
     margin-bottom:25px;
 }
 
 .hero h1{
-    font-size:36px;
+    font-size:35px;
     margin-bottom:8px;
 }
 
@@ -324,36 +320,34 @@ main{
     color:var(--muted);
 }
 
-.app-preview{
+.app-image{
     width:150px;
     height:150px;
-    border-radius:28px;
+    border-radius:27px;
     overflow:hidden;
+    background:#0d1424;
     border:1px solid var(--border);
-    background:#0d1322;
-    box-shadow:var(--shadow);
 }
 
-.app-preview img{
+.app-image img{
     width:100%;
     height:100%;
     object-fit:cover;
 }
 
-.app-preview .placeholder{
+.image-placeholder{
     width:100%;
     height:100%;
     display:flex;
     align-items:center;
     justify-content:center;
-    color:#68748e;
-    font-size:13px;
     text-align:center;
+    color:#68748d;
+    font-size:12px;
+    padding:10px;
 }
 
-/* ==============================
-   STATS
-============================== */
+/* STATS */
 
 .stats{
     display:grid;
@@ -363,7 +357,7 @@ main{
 }
 
 .stat{
-    background:var(--panel);
+    background:var(--card);
     border:1px solid var(--border);
     border-radius:17px;
     padding:17px;
@@ -377,21 +371,19 @@ main{
 .stat strong{
     display:block;
     margin-top:8px;
-    font-size:25px;
+    font-size:24px;
 }
 
-/* ==============================
-   CARDS
-============================== */
+/* GRID */
 
-.grid{
+.main-grid{
     display:grid;
     grid-template-columns:380px 1fr;
     gap:20px;
 }
 
 .card{
-    background:var(--panel);
+    background:var(--card);
     border:1px solid var(--border);
     border-radius:20px;
     padding:21px;
@@ -400,8 +392,8 @@ main{
 
 .card-title{
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
     margin-bottom:18px;
 }
 
@@ -410,35 +402,80 @@ main{
 }
 
 .badge{
-    background:#17362e;
-    color:#59e8a7;
-    border-radius:20px;
     padding:5px 9px;
+    border-radius:20px;
+    background:#17362e;
+    color:#5ee9a7;
     font-size:10px;
     font-weight:800;
 }
 
-/* ==============================
-   APP SETTINGS
-============================== */
+/* APP SETTINGS */
 
-.app-settings{
+.two-columns{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:12px;
 }
 
-.app-settings .full-field{
-    grid-column:1/-1;
+.full-field{
+    grid-column:1 / -1;
 }
 
-.save-row{
-    margin-top:5px;
+/* PLAY BUTTONS */
+
+.play-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
 }
 
-/* ==============================
-   TESTER
-============================== */
+.invite-url{
+    margin-top:9px;
+    color:#6edfff;
+    font-size:11px;
+    line-height:1.5;
+    word-break:break-all;
+}
+
+/* MONITOR */
+
+.monitor-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.monitor{
+    background:#0a1020;
+    border:1px solid #222c43;
+    border-radius:14px;
+    padding:15px;
+}
+
+.monitor-title{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.monitor-value{
+    margin-top:8px;
+    font-size:23px;
+    font-weight:900;
+}
+
+.live{
+    color:var(--green);
+}
+
+.monitor-note{
+    margin-top:15px;
+    color:#68738b;
+    font-size:11px;
+    line-height:1.6;
+}
+
+/* TABLE */
 
 .search{
     margin-bottom:14px;
@@ -456,7 +493,7 @@ table{
 th,
 td{
     padding:12px 8px;
-    border-bottom:1px solid #222c44;
+    border-bottom:1px solid #222c43;
     text-align:left;
     white-space:nowrap;
 }
@@ -479,17 +516,17 @@ td{
     padding:5px 8px;
     border-radius:20px;
     font-size:10px;
-    font-weight:700;
+    font-weight:bold;
 }
 
-.status.invited{
-    background:#332c18;
-    color:#ffd15c;
+.invited{
+    background:#3b3119;
+    color:#ffd45c;
 }
 
-.status.joined{
-    background:#17372f;
-    color:#55e7a4;
+.joined{
+    background:#173a30;
+    color:#5ce9a8;
 }
 
 .actions{
@@ -505,140 +542,49 @@ td{
 }
 
 .copy{
-    background:#1b2c44;
-    color:#6ddfff;
+    background:#1a2c44;
+    color:#6edfff;
+}
+
+.join-btn{
+    background:#173a30;
+    color:#5ce9a8;
 }
 
 .delete{
     background:#351d29;
-    color:#ff7e97;
-}
-
-.join{
-    background:#16372f;
-    color:#59e7a6;
+    color:#ff8098;
 }
 
 .empty{
-    padding:35px;
     text-align:center;
-    color:#68738b;
+    padding:35px 10px;
+    color:#68738c;
 }
 
-/* ==============================
-   INVITE / PLAY
-============================== */
-
-.invite-box{
-    border-top:1px solid var(--border);
-    padding-top:18px;
-    margin-top:18px;
-}
-
-.invite-link{
-    font-size:11px;
-    color:#6edfff;
-    word-break:break-all;
-    margin-top:8px;
-}
-
-.play-buttons{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-top:10px;
-}
-
-/* ==============================
-   MONITOR
-============================== */
-
-.monitor-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-}
-
-.monitor{
-    background:#0b1120;
-    border:1px solid #202a42;
-    border-radius:14px;
-    padding:15px;
-}
-
-.monitor-title{
-    color:var(--muted);
-    font-size:11px;
-}
-
-.monitor-value{
-    margin-top:8px;
-    font-size:22px;
-    font-weight:900;
-}
-
-.live{
-    color:var(--green);
-}
-
-.monitor-note{
-    color:#69748b;
-    font-size:11px;
-    margin-top:15px;
-    line-height:1.6;
-}
-
-/* ==============================
-   REVIEW
-============================== */
+/* REVIEW */
 
 .review-box{
-    padding:17px;
     background:#0a1020;
     border:1px solid #242e46;
     border-radius:15px;
+    padding:17px;
+}
+
+.review-box p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.7;
+    margin-bottom:10px;
 }
 
 .stars{
     color:var(--yellow);
     font-size:20px;
-    letter-spacing:3px;
-    margin:8px 0;
+    margin-bottom:10px;
 }
 
-/* ==============================
-   TOAST
-============================== */
-
-#toast{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    z-index:999999;
-    max-width:350px;
-    padding:13px 16px;
-    border-radius:12px;
-    background:#1b253b;
-    border:1px solid #35415f;
-    box-shadow:var(--shadow);
-    transform:translateY(120px);
-    opacity:0;
-    transition:.3s;
-    font-size:12px;
-}
-
-#toast.show{
-    transform:translateY(0);
-    opacity:1;
-}
-
-#toast.error{
-    border-color:#713046;
-}
-
-/* ==============================
-   FOOTER
-============================== */
+/* FOOTER */
 
 footer{
     text-align:center;
@@ -647,9 +593,34 @@ footer{
     font-size:11px;
 }
 
-/* ==============================
-   RESPONSIVE
-============================== */
+/* TOAST */
+
+#toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:999999;
+    max-width:350px;
+    padding:14px 17px;
+    border-radius:12px;
+    background:#1b253b;
+    border:1px solid #36425f;
+    opacity:0;
+    transform:translateY(120px);
+    transition:.3s;
+    font-size:12px;
+}
+
+#toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+#toast.error{
+    border-color:#743149;
+}
+
+/* MOBILE */
 
 @media(max-width:1100px){
 
@@ -661,7 +632,7 @@ footer{
 
 @media(max-width:900px){
 
-    .grid{
+    .main-grid{
         grid-template-columns:1fr;
     }
 
@@ -669,7 +640,7 @@ footer{
         grid-template-columns:1fr;
     }
 
-    .app-preview{
+    .app-image{
         width:110px;
         height:110px;
     }
@@ -690,24 +661,20 @@ footer{
         grid-template-columns:1fr 1fr;
     }
 
-    .hero h1{
-        font-size:28px;
-    }
-
-    .header-actions .export{
-        display:none;
-    }
-
-    .app-settings{
+    .two-columns{
         grid-template-columns:1fr;
     }
 
-    .app-settings .full-field{
+    .full-field{
         grid-column:auto;
     }
 
     .play-buttons{
         grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:28px;
     }
 
 }
@@ -726,11 +693,7 @@ footer{
         padding:27px 18px;
     }
 
-    .gate-card h1{
-        font-size:25px;
-    }
-
-    .brand span{
+    .header-actions .export-btn{
         display:none;
     }
 }
@@ -739,13 +702,11 @@ footer{
 
 <body>
 
-<!-- ==============================
-     LOADER
-============================== -->
+<!-- LOADER -->
 
 <div id="loader">
 
-    <div>
+    <div class="loader-content">
 
         <div class="loader-logo">
             FX
@@ -760,15 +721,13 @@ footer{
 </div>
 
 
-<!-- ==============================
-     GOOGLE GROUP GATE
-============================== -->
+<!-- GOOGLE GROUP GATE -->
 
 <section id="gate" class="hidden">
 
     <div class="gate-card">
 
-        <div class="logo">
+        <div class="main-logo">
             FX
         </div>
 
@@ -782,7 +741,7 @@ footer{
 
         <div class="group-box">
 
-            <div class="group-title">
+            <div class="group-label">
                 REQUIRED GOOGLE GROUP
             </div>
 
@@ -795,13 +754,13 @@ footer{
         <div class="gate-buttons">
 
             <button
-                class="btn btn-primary full"
+                class="btn primary full"
                 onclick="openGroup()">
                 🔗 JOIN GOOGLE GROUP
             </button>
 
             <button
-                class="btn btn-dark full"
+                class="btn dark full"
                 onclick="confirmGroup()">
                 ✓ I JOINED THE GROUP
             </button>
@@ -809,7 +768,7 @@ footer{
         </div>
 
         <div class="note">
-            Please join the official Google Group before
+            Join the official Google Group before
             entering the testing portal.
         </div>
 
@@ -818,9 +777,7 @@ footer{
 </section>
 
 
-<!-- ==============================
-     DASHBOARD
-============================== -->
+<!-- DASHBOARD -->
 
 <section id="dashboard" class="hidden">
 
@@ -843,13 +800,13 @@ footer{
         <div class="header-actions">
 
             <button
-                class="btn btn-dark export"
+                class="btn dark export-btn"
                 onclick="exportCSV()">
                 CSV
             </button>
 
             <button
-                class="btn btn-danger"
+                class="btn danger"
                 onclick="logout()">
                 Logout
             </button>
@@ -865,28 +822,27 @@ footer{
 
 <div class="container">
 
-
-<!-- ==============================
-     HERO
-============================== -->
+<!-- HERO -->
 
 <div class="hero">
 
     <div>
 
-        <h1 id="dashboardTitle">
+        <h1 id="heroTitle">
             Closed Testing Dashboard
         </h1>
 
-        <p id="dashboardSubtitle">
-            Manage app testers, invitations and Play Store access.
+        <p>
+            Manage testers, invitations and Play Store access.
         </p>
 
     </div>
 
-    <div class="app-preview" id="appPreview">
+    <div
+        id="appImageBox"
+        class="app-image">
 
-        <div class="placeholder">
+        <div class="image-placeholder">
             App Image
         </div>
 
@@ -895,93 +851,47 @@ footer{
 </div>
 
 
-<!-- ==============================
-     STATS
-============================== -->
+<!-- STATS -->
 
 <div class="stats">
 
     <div class="stat">
-
-        <small>
-            TESTERS
-        </small>
-
-        <strong id="totalTesters">
-            0
-        </strong>
-
+        <small>TESTERS</small>
+        <strong id="totalTesters">0</strong>
     </div>
 
     <div class="stat">
-
-        <small>
-            INVITED
-        </small>
-
-        <strong id="totalInvited">
-            0
-        </strong>
-
+        <small>INVITED</small>
+        <strong id="totalInvited">0</strong>
     </div>
 
     <div class="stat">
-
-        <small>
-            JOINED
-        </small>
-
-        <strong id="totalJoined">
-            0
-        </strong>
-
+        <small>JOINED</small>
+        <strong id="totalJoined">0</strong>
     </div>
 
     <div class="stat">
-
-        <small>
-            PLAY OPENS
-        </small>
-
-        <strong id="playOpens">
-            0
-        </strong>
-
+        <small>PLAY OPENS</small>
+        <strong id="playOpens">0</strong>
     </div>
 
     <div class="stat">
-
-        <small>
-            DOWNLOAD CLICKS
-        </small>
-
-        <strong id="downloadClicks">
-            0
-        </strong>
-
+        <small>DOWNLOAD CLICKS</small>
+        <strong id="downloadClicks">0</strong>
     </div>
 
     <div class="stat">
-
-        <small>
-            REVIEWS
-        </small>
-
-        <strong id="reviewClicks">
-            0
-        </strong>
-
+        <small>REVIEW OPENS</small>
+        <strong id="reviewClicks">0</strong>
     </div>
 
 </div>
 
 
-<div class="grid">
+<div class="main-grid">
 
 
-<!-- ==============================
-     LEFT COLUMN
-============================== -->
+<!-- LEFT -->
 
 <div>
 
@@ -1003,9 +913,9 @@ footer{
     </div>
 
 
-    <div class="app-settings">
+    <div class="two-columns">
 
-        <div class="full-field form-group">
+        <div class="form-group full-field">
 
             <label>
                 App Image URL
@@ -1014,7 +924,7 @@ footer{
             <input
                 id="appImage"
                 type="url"
-                placeholder="https://example.com/app-image.png">
+                placeholder="https://example.com/app.png">
 
         </div>
 
@@ -1047,7 +957,7 @@ footer{
         </div>
 
 
-        <div class="full-field form-group">
+        <div class="form-group full-field">
 
             <label>
                 Package Name
@@ -1061,14 +971,14 @@ footer{
         </div>
 
 
-        <div class="full-field form-group">
+        <div class="form-group full-field">
 
             <label>
                 Google Play Store URL
             </label>
 
             <input
-                id="playStoreUrl"
+                id="playStore"
                 type="url"
                 placeholder="https://play.google.com/store/apps/details?id=...">
 
@@ -1077,20 +987,16 @@ footer{
     </div>
 
 
-    <div class="save-row">
-
-        <button
-            class="btn btn-primary full"
-            onclick="saveApp()">
-            💾 Save App Information
-        </button>
-
-    </div>
+    <button
+        class="btn primary full"
+        onclick="saveApp()">
+        💾 Save App
+    </button>
 
 </div>
 
 
-<!-- ADD TESTER -->
+<!-- TESTER ADD -->
 
 <div class="card">
 
@@ -1124,7 +1030,7 @@ footer{
     <div class="form-group">
 
         <label>
-            Tester Google Email
+            Google Email
         </label>
 
         <input
@@ -1136,33 +1042,33 @@ footer{
 
 
     <button
-        class="btn btn-primary full"
+        class="btn primary full"
         onclick="addTester()">
         ➕ Add Tester
     </button>
 
 
-    <div class="invite-box">
+    <div style="margin-top:20px">
 
         <label>
-            Testing / Invitation Link
+            Closed Testing Invitation URL
         </label>
 
         <input
-            id="testingLink"
+            id="testingUrl"
             type="url"
             placeholder="https://play.google.com/apps/testing/...">
 
         <button
-            class="btn btn-success full"
+            class="btn success full"
             style="margin-top:10px"
-            onclick="saveTestingLink()">
+            onclick="saveTestingUrl()">
             🔗 Save Invite Link
         </button>
 
         <div
-            id="inviteDisplay"
-            class="invite-link">
+            id="inviteText"
+            class="invite-url">
         </div>
 
     </div>
@@ -1177,7 +1083,7 @@ footer{
     <div class="card-title">
 
         <h2>
-            ▶️ Google Play
+            ▶️ Play Store
         </h2>
 
         <span class="badge">
@@ -1187,24 +1093,16 @@ footer{
     </div>
 
 
-    <p style="color:var(--muted);font-size:12px;line-height:1.7;margin-bottom:14px">
-
-        Testers can use the buttons below to open the
-        Play Store, join testing and access your app.
-
-    </p>
-
-
     <div class="play-buttons">
 
         <button
-            class="btn btn-primary"
+            class="btn primary"
             onclick="openPlayStore()">
             🚀 Open Play Store
         </button>
 
         <button
-            class="btn btn-success"
+            class="btn success"
             onclick="openTesting()">
             🧪 Join Testing
         </button>
@@ -1221,7 +1119,7 @@ footer{
     <div class="card-title">
 
         <h2>
-            ⭐ App Review
+            ⭐ Review
         </h2>
 
         <span class="badge">
@@ -1233,11 +1131,9 @@ footer{
 
     <div class="review-box">
 
-        <p style="color:var(--muted);font-size:12px;line-height:1.6">
-
-            After using the app, testers can open the Play Store
-            and leave an honest review based on their experience.
-
+        <p>
+            Testers can open the Play Store and leave an
+            honest review based on their actual experience.
         </p>
 
         <div class="stars">
@@ -1245,9 +1141,9 @@ footer{
         </div>
 
         <button
-            class="btn btn-warning full"
+            class="btn warning full"
             onclick="openReview()">
-            ⭐ Write an Honest Review
+            ⭐ Open Review Page
         </button>
 
     </div>
@@ -1258,14 +1154,12 @@ footer{
 </div>
 
 
-<!-- ==============================
-     RIGHT COLUMN
-============================== -->
+<!-- RIGHT -->
 
 <div>
 
 
-<!-- MONITOR -->
+<!-- LIVE MONITOR -->
 
 <div class="card">
 
@@ -1275,9 +1169,7 @@ footer{
             📊 Live Monitor
         </h2>
 
-        <span
-            class="badge"
-            style="color:#54e9a5">
+        <span class="badge">
             ● LIVE
         </span>
 
@@ -1292,4 +1184,163 @@ footer{
                 ACTIVE TESTERS
             </div>
 
-  
+            <div
+                id="monitorActive"
+                class="monitor-value live">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="monitor">
+
+            <div class="monitor-title">
+                INVITED
+            </div>
+
+            <div
+                id="monitorInvited"
+                class="monitor-value">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="monitor">
+
+            <div class="monitor-title">
+                PLAY OPENS
+            </div>
+
+            <div
+                id="monitorPlay"
+                class="monitor-value">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="monitor">
+
+            <div class="monitor-title">
+                REVIEW OPENS
+            </div>
+
+            <div
+                id="monitorReview"
+                class="monitor-value">
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="monitor-note">
+
+        Website activity is tracked locally.
+        Real Play Store installations, active users,
+        ratings, reviews and crashes require
+        Google Play Console/API or a backend.
+
+    </div>
+
+</div>
+
+
+<!-- TESTER LIST -->
+
+<div class="card">
+
+    <div class="card-title">
+
+        <h2>
+            👤 Testers
+        </h2>
+
+        <span
+            id="testerCount"
+            class="badge">
+            0
+        </span>
+
+    </div>
+
+
+    <div class="search">
+
+        <input
+            id="search"
+            type="search"
+            placeholder="🔎 Search name or email..."
+            oninput="renderTesters()">
+
+    </div>
+
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="testerTable">
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+
+<footer>
+    © 2026 FOROS EXTREME — Closed Testing Portal
+</footer>
+
+</section>
+
+
+<!-- TOAST -->
+
+<div id="toast"></div>
+
+
+<script>
+
+/* =========================================
+   CONFIG
+========================================= */
+
+const GROUP_EMAIL =
+    "forosextreme@googlegroups.com";
+
+const GROUP_URL =
+    "https://groups.google.com/g/forosextreme";
+
+
+/* ==============

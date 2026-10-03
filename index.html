@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b16">
+<title>FOROS EXTREME - Closed Testing</title>
+<style>
+:root{--bg:#070a13;--card:#111827;--in:#080d19;--bd:#27324a;--tx:#fff;--mu:#8e99b0;--pr:#7357ff;--bl:#4ca7ff;--gr:#00c896}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:radial-gradient(circle at 10% 0,rgba(115,87,255,.22),transparent 30%),radial-gradient(circle at 90% 100%,rgba(0,200,150,.13),transparent 30%),var(--bg);color:var(--tx);font-family:Arial,Helvetica,sans-serif}
+button,input{font-family:inherit}button{cursor:pointer}
+.hidden,#loader.hidden,#gate.hidden,#dash.hidden{display:none!important}
+.wrap{width:92%;max-width:1200px;margin:auto}
+#loader{position:fixed;inset:0;z-index:9999;display:flex;justify-content:center;align-items:center;background:var(--bg);text-align:center;color:var(--mu)}
+.logo{width:85px;height:85px;border-radius:25px;display:flex;justify-content:center;align-items:center;margin:0 auto 15px;background:linear-gradient(135deg,var(--pr),var(--gr));font-size:26px;font-weight:900;color:#fff;animation:pulse 1.3s infinite}
+@keyframes pulse{50%{transform:scale(1.08);box-shadow:0 0 45px rgba(115,87,255,.5)}}
+.btn{border:0;border-radius:12px;padding:12px 16px;color:#fff;font-weight:700;transition:.2s;font-size:13px}
+.btn:hover{transform:translateY(-2px)}
+.primary{background:linear-gradient(135deg,var(--pr),var(--bl))}
+.success{background:linear-gradient(135deg,#00a878,#00d4b5)}
+.dark{background:#202941}.danger{background:#351d29;color:#ff8199}.warning{background:#3d331a;color:#ffd45c}
+.full{width:100%}
+input{width:100%;padding:12px 14px;border-radius:11px;border:1px solid var(--bd);background:var(--in);color:#fff;outline:none;font-size:14px}
+input:focus{border-color:var(--pr);box-shadow:0 0 0 3px rgba(115,87,255,.15)}
+label{display:block;color:var(--mu);font-size:12px;margin-bottom:6px}
+.fg{margin-bottom:12px}
+#gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.gate-card{width:100%;max-width:500px;padding:36px 26px;text-align:center;border-radius:28px;background:rgba(17,24,39,.95);border:1px solid var(--bd);box-shadow:0 25px 80px rgba(0,0,0,.5)}
+.gate-card h1{font-size:28px;margin-bottom:8px}
+.gate-card p{color:var(--mu);margin-bottom:18px}
+.gbox{background:var(--in);border:1px solid var(--bd);padding:16px;border-radius:16px;margin-bottom:16px}
+.gbox small{color:var(--mu);font-size:11px}
+.gbox div{color:#6fe7ff;font-weight:800;margin-top:6px;word-break:break-all}
+.gate-card .btn{margin-bottom:10px}
+.note{color:#667189;font-size:11px;line-height:1.6}
+header{height:68px;position:sticky;top:0;z-index:100;background:rgba(7,10,19,.92);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(15px)}
+.hin{height:100%;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900}
+.brand i{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--pr),var(--gr));font-style:normal;font-size:14px}
+.hact{display:flex;gap:8px}
+main{padding:28px 0 40px}
+main h1{font-size:30px;margin-bottom:6px}
+.sub{color:var(--mu);margin-bottom:20px}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.ytb{background:#ff0033}.wab{background:#1faa59}
+.drop{position:relative;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:12px;min-height:86px;padding:12px;border:2px dashed var(--bd);border-radius:14px;color:var(--mu);font-size:12px;text-align:center;cursor:pointer;transition:.2s;outline:none}
+.drop:hover,.drop:focus,.drop.over{border-color:var(--pr);background:rgba(115,87,255,.08);color:#fff}
+.drop img{width:64px;height:64px;object-fit:cover;border-radius:14px}
+.drop .btn{padding:6px 10px}
+select{width:100%;padding:12px 14px;border-radius:11px;border:1px solid var(--bd);background:var(--in);color:#fff;outline:none;font-size:14px}
+select:focus{border-color:var(--pr);box-shadow:0 0 0 3px rgba(115,87,255,.15)}
+.auth-card{max-width:460px}.af{text-align:left}.af .btn{margin-top:6px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--in);padding:5px;border-radius:14px;margin-bottom:18px}
+.tab{border:0;border-radius:10px;padding:10px;background:transparent;color:var(--mu);font-weight:700;font-size:14px}
+.tab.on{background:linear-gradient(135deg,var(--pr),var(--bl));color:#fff}
+.chk{display:flex;gap:8px;align-items:center;font-size:12px;margin-bottom:12px}.chk input{width:auto}
+.ph{display:flex;gap:8px}.ph span{display:flex;align-items:center;padding:0 12px;border:1px solid var(--bd);border-radius:11px;background:var(--in);color:#6fe7ff;font-weight:700;font-size:14px}
+.hu{color:var(--mu);font-size:12px;align-self:center;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acc{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.acc div{background:#0a1020;border:1px solid var(--bd);border-radius:14px;padding:12px;min-width:0}
+.acc small{display:block;color:var(--mu);font-size:10px;margin-bottom:5px}.acc b{font-size:13px;word-break:break-all}
+@media(max-width:700px){.acc{grid-template-columns:1fr 1fr}.hu{display:none}}
+textarea{width:100%;padding:12px 14px;border-radius:11px;border:1px solid var(--bd);background:var(--in);color:#fff;outline:none;font-size:14px;font-family:inherit;resize:vertical}
+textarea:focus{border-color:var(--pr);box-shadow:0 0 0 3px rgba(115,87,255,.15)}
+.ptabs{display:flex;gap:6px;background:var(--card);border:1px solid var(--bd);padding:6px;border-radius:16px;margin-bottom:20px;overflow-x:auto}
+.ptabs .tab{flex:1;white-space:nowrap;padding:11px 14px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff5577;margin-left:6px}
+.bar{height:8px;border-radius:8px;background:#1b2438;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pr),var(--gr));transition:width .5s}
+.tst{background:#172a44;color:#6edfff}
+.filters{display:grid;grid-template-columns:1fr 200px;gap:10px}
+.irow{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#0a1020;border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:8px}
+.irow .act button{padding:8px 11px;font-size:11px}
+.modal{position:fixed;inset:0;z-index:2000;background:rgba(3,5,12,.82);display:flex;align-items:flex-start;justify-content:center;padding:16px 10px;overflow:auto}
+.mbox{width:100%;max-width:780px;background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:18px}
+.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:18px}
+.live{color:var(--gr);font-weight:700;font-size:11px;margin-left:6px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
+.pill{padding:5px 10px;border-radius:20px;background:#1a2c44;color:#6edfff;font-size:11px;font-weight:700}
+.fbi{background:#0a1020;border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:8px;font-size:13px;line-height:1.5;word-break:break-word}
+.fbi .m{color:var(--mu);font-size:11px;margin-bottom:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.star{color:#ffc857}
+.sec{margin:18px 0 8px;font-size:15px;font-weight:700}
+.msg{background:#0a1020;border:1px solid var(--bd);border-radius:12px;padding:10px 12px;color:var(--mu);font-size:12px;margin:10px 0;word-break:break-word}
+@media(max-width:700px){.filters{grid-template-columns:1fr}}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px}
+.stat small{color:var(--mu);font-size:10px}
+.stat strong{display:block;margin-top:6px;font-size:22px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:20px;margin-bottom:20px}
+.ct{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.ct h2{font-size:18px}
+.badge{padding:5px 10px;border-radius:20px;background:#17362e;color:#5ee9a7;font-size:10px;font-weight:800}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.span{grid-column:1/-1}
+.apps{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+.app{background:#0a1020;border:1px solid var(--bd);border-radius:18px;padding:15px;transition:.2s}
+.app:hover{border-color:var(--pr)}
+.atop{display:flex;gap:13px;align-items:center;margin-bottom:13px}
+.aimg{width:70px;height:70px;min-width:70px;border-radius:17px;overflow:hidden;background:#111827;border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;color:#68748d;font-size:11px}
+.aimg img{width:100%;height:100%;object-fit:cover}
+.app h3{font-size:16px;margin-bottom:4px;word-break:break-word}
+.app p{color:#7f8aa3;font-size:11px}
+.tag{display:inline-block;margin-top:6px;padding:3px 8px;border-radius:20px;background:#17362e;color:#5ee9a7;font-size:9px;font-weight:800}
+.abtn{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.abtn .btn{font-size:11px;padding:10px}
+.rm{margin-top:8px}
+.empty{grid-column:1/-1;text-align:center;padding:30px 10px;color:#68738c;border:1px dashed var(--bd);border-radius:14px}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:11px 8px;border-bottom:1px solid #222c43;text-align:left;white-space:nowrap;font-size:12px}
+th{color:#727e98;font-size:10px;text-transform:uppercase}
+td.em{color:#6edfff}
+.st{padding:5px 8px;border-radius:20px;font-size:10px;font-weight:bold}
+.inv{background:#3b3119;color:#ffd45c}.joi{background:#173a30;color:#5ce9a8}
+.act{display:flex;gap:4px}
+.act button{border:0;border-radius:7px;padding:6px 8px;font-size:10px}
+.c1{background:#1a2c44;color:#6edfff}.c2{background:#173a30;color:#5ce9a8}.c3{background:#351d29;color:#ff8098}
+.mon{margin-top:12px;color:#68738b;font-size:11px;line-height:1.6}
+footer{text-align:center;color:#5d6880;padding:22px;font-size:11px}
+#toast{position:fixed;right:20px;bottom:20px;z-index:99999;max-width:340px;padding:13px 16px;border-radius:12px;background:#1b253b;border:1px solid #36425f;opacity:0;transform:translateY(120px);transition:.3s;font-size:12px}
+#toast.show{opacity:1;transform:none}#toast.err{border-color:#743149}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.grid2,.apps{grid-template-columns:1fr}.span{grid-column:auto}main h1{font-size:25px}}
+@media(max-width:450px){.stats{grid-template-columns:1fr 1fr}.hact .exp{display:none}}
+</style>
+</head>
+<body>
+
+<div id="loader"><div><div class="logo">FX</div>Loading FOROS EXTREME...</div></div>
+
+<section id="auth" class="hidden">
+  <div class="gate-card auth-card">
+    <div class="logo" style="animation:none">FX</div>
+    <h1>FOROS EXTREME</h1>
+    <div class="tabs"><button type="button" class="tab on" id="tabIn">Log in</button><button type="button" class="tab" id="tabUp">Sign up</button></div>
+    <form id="fIn" class="af">
+      <div class="fg"><label>Email</label><input id="lMail" type="email" autocomplete="email" placeholder="you@gmail.com" required></div>
+      <div class="fg"><label>Password</label><input id="lPw" type="password" autocomplete="current-password" required></div>
+      <label class="chk"><input type="checkbox" id="lRem"> Keep me signed in</label>
+      <button class="btn primary full">Log in</button>
+    </form>
+    <form id="fUp" class="af hidden">
+      <div class="fg"><label>Email</label><input id="sMail" type="email" autocomplete="email" placeholder="you@gmail.com" required></div>
+      <div class="fg"><label>Password (min 6 characters)</label><input id="sPw" type="password" autocomplete="new-password" required></div>
+      <div class="fg"><label>Confirm password</label><input id="sPw2" type="password" autocomplete="new-password" required></div>
+      <div class="fg"><label>Country / Region</label><select id="sCountry"></select></div>
+      <div class="fg"><label>City</label><select id="sCity"></select><input id="sCityO" class="hidden" style="margin-top:8px" placeholder="Type your city"></div>
+      <div class="fg"><label>Phone number</label><div class="ph"><span id="sDial">+</span><input id="sPhone" type="tel" autocomplete="tel-national" placeholder="1712345678" required></div></div>
+      <div class="fg"><label>Postal code</label><input id="sZip" autocomplete="postal-code" placeholder="3100" required></div>
+      <button class="btn primary full">Create account</button>
+    </form>
+    <div class="note" style="margin-top:12px">Account data is saved in this browser (passwords are hashed, never stored as plain text).</div>
+  </div>
+</section>
+
+<section id="gate" class="hidden">
+  <div class="gate-card">
+    <div class="logo" style="animation:none">FX</div>
+    <h1>FOROS EXTREME</h1>
+    <p>Google Play Closed Testing Portal</p>
+    <div class="gbox"><small>REQUIRED GOOGLE GROUP</small><div>forosextreme@googlegroups.com</div></div>
+    <button class="btn primary full" id="joinBtn">🔗 Join Google Group</button>
+    <button class="btn dark full" id="okBtn">✓ I joined the group</button>
+    <div class="links" style="justify-content:center;margin:14px 0 0"><button class="btn ytb" data-url="https://youtube.com/@foros777?si=X9t3EiVfN8rVVn-S">▶ YouTube</button><button class="btn wab" data-url="https://chat.whatsapp.com/BVvA0bfby0vAGMUcZFTmdi?s=cl&p=a&mlu=4&ilr=4">💬 WhatsApp</button></div>
+    <div class="note" style="margin-top:14px">Join the official Google Group before entering. This is a self-confirmation; HTML alone cannot verify membership.</div>
+  </div>
+</section>
+
+<section id="dash" class="hidden">
+<header><div class="wrap hin">
+  <div class="brand"><i>FX</i><span>FOROS EXTREME</span></div>
+  <div class="hact">
+    <span id="hUser" class="hu"></span>
+    <button class="btn dark exp" id="csvBtn">CSV</button>
+    <button class="btn danger" id="outBtn">Logout</button>
+  </div>
+</div></header>
+
+<main><div class="wrap">
+  <h1>Closed Testing Dashboard</h1>
+  <p class="sub">Manage your testing games, testers and Play Store access.</p>
+  <div class="links"><button class="btn ytb" data-url="https://youtube.com/@foros777?si=X9t3EiVfN8rVVn-S">▶ YouTube Channel</button><button class="btn wab" data-url="https://chat.whatsapp.com/BVvA0bfby0vAGMUcZFTmdi?s=cl&p=a&mlu=4&ilr=4">💬 WhatsApp Group</button></div>
+
+  <div class="ptabs" id="ptabs"><button class="tab on" data-p="pMy">📱 My Apps</button><button class="tab" data-p="pTest">🧪 App Testing<span class="dot hidden" id="invDot"></span></button><button class="tab" data-p="pAcc">👤 Account</button></div>
+  <div id="pMy">
+  <div class="stats">
+    <div class="stat"><small>APPS</small><strong id="sApps">0</strong></div>
+    <div class="stat"><small>TESTERS</small><strong id="sTest">0</strong></div>
+    <div class="stat"><small>INVITED</small><strong id="sInv">0</strong></div>
+    <div class="stat"><small>JOINED</small><strong id="sJoin">0</strong></div>
+    <div class="stat"><small>PLAY OPENS</small><strong id="sPlay">0</strong></div>
+    <div class="stat"><small>TEST OPENS</small><strong id="sTestOpen">0</strong></div>
+  </div>
+
+  <div class="card">
+    <div class="ct"><h2>📱 My Apps</h2><span class="badge" id="appBadge">0 APPS</span></div>
+    <div class="grid2">
+      <div><label>App / Game name</label><input id="aName" placeholder="Bubble Nova"></div>
+      <div><label>Version</label><input id="aVer" placeholder="1.0.0"></div>
+      <div class="span"><label>App image URL (any link: direct, Drive, Dropbox, Imgur, GitHub, data:image)</label><input id="aImg" type="text" placeholder="https://example.com/icon.png">
+        <div id="drop" class="drop" tabindex="0"><img id="dPrev" class="hidden" alt=""><span id="dTxt">📷 Drag &amp; drop image here, click to choose, or paste (Ctrl+V)</span><button type="button" class="btn danger hidden" id="dClr">✕</button></div>
+        <input type="file" id="aFile" accept="image/*" class="hidden"></div>
+      <div class="span"><label>Google Play Store URL</label><input id="aPlay" type="url" placeholder="https://play.google.com/store/apps/details?id=com.example.app"></div>
+      <div class="span"><label>Closed Testing URL</label><input id="aTest" type="url" placeholder="https://play.google.com/apps/testing/com.example.app"></div>
+      <button class="btn primary span" id="addApp">➕ Add application</button>
+    </div>
+    <div style="margin-top:18px"><input id="aSearch" type="search" placeholder="🔎 Search applications..."></div>
+    <div id="appList" class="apps"></div>
+  </div>
+
+  <div class="card">
+    <div class="ct"><h2>👥 Testers</h2><span class="badge" id="tBadge">0</span></div>
+    <div class="grid2">
+      <div><label>Tester name</label><input id="tName" placeholder="Tester name"></div>
+      <div><label>Google email</label><input id="tMail" type="email" placeholder="tester@gmail.com"></div>
+      <button class="btn primary span" id="addTester">➕ Add tester</button>
+    </div>
+    <div style="margin:16px 0 12px"><input id="tSearch" type="search" placeholder="🔎 Search name or email..."></div>
+    <div class="tw"><table>
+      <thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody id="tBody"></tbody>
+    </table></div>
+    <div class="mon">Counts are tracked in this browser only. Real installs, ratings, reviews and crashes need the Google Play Console / Developer API.</div>
+  </div>
+
+  </div>
+<div id="pTest" class="hidden">
+  <div class="card">
+    <div class="ct"><h2>✉️ My Invitations</h2><span class="badge" id="invBadge">0</span></div>
+    <div id="invList"></div>
+  </div>
+  <div class="card">
+    <div class="ct"><h2>🧪 App Testing</h2><span class="badge" id="allBadge">0 APPS</span></div>
+    <p class="sub" style="margin-bottom:12px">Every user's apps and games. Join a test, check in daily and share feedback. Closed testing completes after <b>12 testers</b> stay joined for <b>14 days</b>.</p>
+    <div class="filters"><input id="gSearch" type="search" placeholder="🔎 Search apps or owners..."><select id="gFilter"><option value="all">All apps</option><option value="open">Need testers</option><option value="joined">Apps I'm testing</option><option value="mine">My apps</option></select></div>
+    <div id="gList" class="apps"></div>
+  </div>
+</div>
+<div id="pAcc" class="hidden"><div class="card">
+    <div class="ct"><h2>👤 My Account</h2><span class="badge">SIGNED IN</span></div>
+    <div class="acc" id="accInfo"></div>
+  </div></div>
+</div></main>
+<footer>© 2026 FOROS EXTREME — Closed Testing Portal</footer>
+</section>
+
+<div id="modal" class="modal hidden"><div class="mbox"><div class="mhead"><b id="mTitle"></b><button class="btn dark" id="mClose">✕</button></div><div id="mMon"></div><div id="mForm"></div></div></div>
+<div id="toast"></div>
+
+<script>
+var GROUP_URL="https://groups.google.com/g/forosextreme";
+var apps=[],testers=[],stats={play:0,test:0};
+
+function $(id){return document.getElementById(id)}
+function load(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(){try{localStorage.setItem(K("fx_testers"),JSON.stringify(testers));localStorage.setItem(K("fx_stats"),JSON.stringify(stats))}catch(e){}}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function okUrl(v){try{var u=new URL(v);return u.protocol==="http:"||u.protocol==="https:"}catch(e){return false}}
+function normImg(v){
+  v=(v||"").trim();if(!v)return"";
+  if(/^data:image\//i.test(v))return v;
+  if(v.indexOf("//")===0)v="https:"+v;
+  if(!/^https?:\/\//i.test(v)&&/^[\w.-]+\.[a-z]{2,}\//i.test(v))v="https://"+v;
+  var m;
+  if((m=v.match(/drive\.google\.com\/file\/d\/([\w-]+)/))||(m=v.match(/drive\.google\.com\/(?:open|uc)\?[^#]*id=([\w-]+)/)))return"https://drive.google.com/thumbnail?id="+m[1]+"&sz=w600";
+  if((m=v.match(/^https?:\/\/(?:www\.)?imgur\.com\/(?:gallery\/|a\/)?(\w{5,8})\/?$/i)))return"https://i.imgur.com/"+m[1]+".jpg";
+  if((m=v.match(/^https?:\/\/(?:www\.)?github\.com\/([^\/]+\/[^\/]+)\/blob\/(.+)$/i)))return"https://raw.githubusercontent.com/"+m[1]+"/"+m[2];
+  if(/^https?:\/\/(?:www\.)?dropbox\.com\//i.test(v))return v.replace(/[?&]dl=\d/,"").replace(/(\?|$)/,"$1raw=1&").replace(/&$/,"");
+  return v;
+}
+function okImg(v){return /^data:image\//i.test(v)||okUrl(v)}
+function okMail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
+var tt;
+function toast(m,err){var b=$("toast");clearTimeout(tt);b.textContent=m;b.className=err?"show err":"show";tt=setTimeout(function(){b.className=""},3000)}
+function copy(t){
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast("Copied.")}).catch(function(){fb(t)})}else fb(t)
+}
+function fb(t){var x=document.createElement("textarea");x.value=t;document.body.appendChild(x);x.select();try{document.execCommand("copy");toast("Copied.")}catch(e){toast(t)}x.remove()}
+function openUrl(u){window.open(u,"_blank","noopener,noreferrer")}
+function find(list,id){return list.filter(function(x){return String(x.id)===String(id)})[0]}
+
+
+/* IMAGE DRAG & DROP */
+var pendingImg="";
+function setPending(d){
+  pendingImg=d||"";
+  $("dPrev").classList.toggle("hidden",!d);$("dClr").classList.toggle("hidden",!d);
+  if(d)$("dPrev").src=d;
+  $("dTxt").textContent=d?"Image ready":"📷 Drag & drop image here, click to choose, or paste (Ctrl+V)";
+}
+function handleFile(f){
+  if(!f||!/^image\//.test(f.type))return toast("Please choose an image file.",1);
+  var r=new FileReader();
+  r.onload=function(){
+    if(/svg|gif/.test(f.type)&&r.result.length<200000){setPending(r.result);return toast("Image added.")}
+    var im=new Image();
+    im.onload=function(){
+      var m=320,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");
+      c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));
+      c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+      var d=c.toDataURL("image/webp",.88);if(d.indexOf("image/webp")<0)d=c.toDataURL("image/jpeg",.88);
+      setPending(d);toast("Image added.");
+    };
+    im.onerror=function(){toast("Could not read this image.",1)};
+    im.src=r.result;
+  };
+  r.readAsDataURL(f);
+}
+function initDrop(){
+  var z=$("drop"),fi=$("aFile");
+  z.onclick=function(e){if(e.target.id!=="dClr")fi.click()};
+  z.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();fi.click()}};
+  fi.onchange=function(){handleFile(fi.files[0]);fi.value=""};
+  $("dClr").onclick=function(e){e.stopPropagation();setPending("")};
+  ["dragenter","dragover"].forEach(function(n){z.addEventListener(n,function(e){e.preventDefault();z.classList.add("over")})});
+  ["dragleave","drop"].forEach(function(n){z.addEventListener(n,function(e){e.preventDefault();z.classList.remove("over")})});
+  z.addEventListener("drop",function(e){
+    var dt=e.dataTransfer;if(!dt)return;
+    if(dt.files&&dt.files.length)return handleFile(dt.files[0]);
+    var u=(dt.getData("text/uri-list")||dt.getData("text/plain")||"").trim();
+    if(u){$("aImg").value=u;setPending("");toast("Image link added.")}
+  });
+  document.addEventListener("paste",function(e){
+    if($("dash").classList.contains("hidden"))return;
+    var it=(e.clipboardData&&e.clipboardData.items)||[];
+    for(var i=0;i<it.length;i++){if(it[i].type.indexOf("image/")===0){handleFile(it[i].getAsFile());e.preventDefault();return}}
+  });
+}
+
+/* START */
+var cur=null,users=[];
+function K(n){return n+"_"+(cur?cur.email:"")}
+function saveUsers(){try{localStorage.setItem("fx_users",JSON.stringify(users))}catch(e){toast("Could not save account data.",1)}}
+function rnd(){var a=new Uint8Array(16);if(window.crypto&&crypto.getRandomValues)crypto.getRandomValues(a);else for(var i=0;i<16;i++)a[i]=Math.random()*256;return Array.prototype.map.call(a,function(x){return("0"+x.toString(16)).slice(-2)}).join("")}
+function hashPw(pw,salt){
+  var t=salt+pw;
+  if(window.crypto&&crypto.subtle&&window.TextEncoder)return crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)).then(function(b){return Array.prototype.map.call(new Uint8Array(b),function(x){return("0"+x.toString(16)).slice(-2)}).join("")});
+  var h=5381;for(var i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return Promise.resolve("f"+(h>>>0).toString(16));
+}
+var COUNTRIES="Bangladesh|+880;India|+91;Pakistan|+92;Nepal|+977;Sri Lanka|+94;Bhutan|+975;Maldives|+960;Saudi Arabia|+966;United Arab Emirates|+971;Qatar|+974;Kuwait|+965;Oman|+968;Bahrain|+973;Malaysia|+60;Singapore|+65;Indonesia|+62;Thailand|+66;Philippines|+63;Vietnam|+84;China|+86;Japan|+81;South Korea|+82;Turkey|+90;Egypt|+20;Nigeria|+234;South Africa|+27;Kenya|+254;United Kingdom|+44;Ireland|+353;France|+33;Germany|+49;Italy|+39;Spain|+34;Netherlands|+31;Sweden|+46;Russia|+7;United States|+1;Canada|+1;Mexico|+52;Brazil|+55;Argentina|+54;Australia|+61;New Zealand|+64".split(";").map(function(x){var p=x.split("|");return{n:p[0],d:p[1]}});
+var CITIES={"Bangladesh":["Sylhet","Dhaka","Chattogram","Rajshahi","Khulna","Barishal","Rangpur","Mymensingh","Comilla","Gazipur","Narayanganj","Cox's Bazar","Moulvibazar","Habiganj","Sunamganj"],
+"India":["Delhi","Mumbai","Kolkata","Bengaluru","Chennai","Hyderabad","Guwahati","Pune"],"Pakistan":["Karachi","Lahore","Islamabad","Rawalpindi","Faisalabad"],
+"Saudi Arabia":["Riyadh","Jeddah","Mecca","Medina","Dammam"],"United Arab Emirates":["Dubai","Abu Dhabi","Sharjah","Ajman"],"Qatar":["Doha","Al Rayyan"],"Kuwait":["Kuwait City"],"Oman":["Muscat","Salalah"],
+"Malaysia":["Kuala Lumpur","Penang","Johor Bahru"],"Singapore":["Singapore"],"Nepal":["Kathmandu","Pokhara"],"Sri Lanka":["Colombo","Kandy"],
+"United Kingdom":["London","Manchester","Birmingham","Leeds","Glasgow"],"United States":["New York","Los Angeles","Chicago","Houston","Dallas","Miami"],"Canada":["Toronto","Vancouver","Montreal","Calgary"],
+"Australia":["Sydney","Melbourne","Brisbane","Perth"],"Germany":["Berlin","Munich","Hamburg","Frankfurt"],"Italy":["Rome","Milan","Naples"],"France":["Paris","Lyon","Marseille"]};
+function dial(c){var f=COUNTRIES.filter(function(x){return x.n===c})[0];return f?f.d:""}
+function fillCities(){
+  var c=$("sCountry").value,l=CITIES[c]||[];
+  $("sCity").innerHTML='<option value="">Select city</option>'+l.map(function(x){return'<option>'+esc(x)+'</option>'}).join("")+'<option value="__o">Other (type city)</option>';
+  if(c&&!l.length)$("sCity").value="__o";
+  cityOther();$("sDial").textContent=dial(c)||"+";
+}
+function cityOther(){$("sCityO").classList.toggle("hidden",$("sCity").value!=="__o")}
+function tab(up){
+  $("fIn").classList.toggle("hidden",up);$("fUp").classList.toggle("hidden",!up);
+  $("tabIn").classList.toggle("on",!up);$("tabUp").classList.toggle("on",up);
+}
+function signUp(e){
+  e.preventDefault();
+  var email=$("sMail").value.trim().toLowerCase(),pw=$("sPw").value,pw2=$("sPw2").value,country=$("sCountry").value,
+  city=$("sCity").value==="__o"?$("sCityO").value.trim():$("sCity").value,
+  num=$("sPhone").value.replace(/[\s\-().]/g,"").replace(/^\+/,"").replace(/^0+/,""),zip=$("sZip").value.trim();
+  if(!okMail(email))return toast("Enter a valid email.",1);
+  if(pw.length<6)return toast("Password must be at least 6 characters.",1);
+  if(pw!==pw2)return toast("Passwords do not match.",1);
+  if(!country)return toast("Select your country / region.",1);
+  if(!city)return toast("Select or type your city.",1);
+  if(!/^\d{6,14}$/.test(num))return toast("Enter a valid phone number.",1);
+  if(!/^[A-Za-z0-9][A-Za-z0-9 \-]{2,9}$/.test(zip))return toast("Enter a valid postal code.",1);
+  if(users.some(function(u){return u.email===email}))return toast("This email is already registered. Please log in.",1);
+  var salt=rnd();
+  hashPw(pw,salt).then(function(h){
+    var u={id:Date.now(),email:email,salt:salt,hash:h,country:country,city:city,phone:dial(country)+num,zip:zip,created:new Date().toISOString(),group:false};
+    users.push(u);saveUsers();startSession(u,false);toast("Account created. Welcome!");
+  });
+}
+function logIn(e){
+  e.preventDefault();
+  var email=$("lMail").value.trim().toLowerCase(),pw=$("lPw").value;
+  var u=users.filter(function(x){return x.email===email})[0];
+  if(!u)return toast("Email or password is incorrect.",1);
+  hashPw(pw,u.salt).then(function(h){
+    if(h!==u.hash)return toast("Email or password is incorrect.",1);
+    startSession(u,$("lRem").checked);toast("Logged in.");
+  });
+}
+function startSession(u,remember){
+  cur=u;
+  try{localStorage.removeItem("fx_user");sessionStorage.removeItem("fx_user");(remember?localStorage:sessionStorage).setItem("fx_user",u.email)}catch(e){}
+  $("auth").classList.add("hidden");
+  if(u.group)showDash();else $("gate").classList.remove("hidden");
+}
+function loadUserData(){
+  migrate();testers=load(K("fx_testers"),[]);stats=Object.assign({play:0,test:0},load(K("fx_stats"),{}));
+}
+function renderAcc(){
+  $("hUser").textContent=cur.email;
+  $("accInfo").innerHTML=[["Email",cur.email],["Country / Region",cur.country],["City",cur.city],["Phone",cur.phone],["Postal code",cur.zip],["Joined",new Date(cur.created).toLocaleDateString()]].map(function(r){return'<div><small>'+r[0]+'</small><b>'+esc(r[1])+'</b></div>'}).join("");
+}
+
+/* START */
+document.addEventListener("DOMContentLoaded",function(){
+  users=load("fx_users",[]);
+  $("sCountry").innerHTML='<option value="">Select country / region</option>'+COUNTRIES.map(function(c){return'<option>'+esc(c.n)+'</option>'}).join("");
+  fillCities();
+  $("sCountry").onchange=fillCities;$("sCity").onchange=cityOther;
+  $("tabIn").onclick=function(){tab(false)};$("tabUp").onclick=function(){tab(true)};
+  $("fIn").onsubmit=logIn;$("fUp").onsubmit=signUp;
+  setTimeout(function(){
+    $("loader").classList.add("hidden");
+    var em=null;try{em=sessionStorage.getItem("fx_user")||localStorage.getItem("fx_user")}catch(e){}
+    var u=em&&users.filter(function(x){return x.email===em})[0];
+    if(u){cur=u;if(u.group)showDash();else $("gate").classList.remove("hidden")}
+    else $("auth").classList.remove("hidden");
+  },600);
+  $("joinBtn").onclick=function(){openUrl(GROUP_URL)};
+  $("okBtn").onclick=function(){
+    if(!confirm("Please make sure you joined forosextreme@googlegroups.com.\n\nContinue?"))return;
+    cur.group=true;saveUsers();showDash();toast("Portal access granted.");
+  };
+  $("outBtn").onclick=function(){try{sessionStorage.removeItem("fx_user");localStorage.removeItem("fx_user")}catch(e){}location.reload()};
+  document.addEventListener("click",function(e){var b=e.target.closest("[data-url]");if(b)openUrl(b.dataset.url)});
+  initDrop();
+  $("ptabs").onclick=function(e){var b=e.target.closest(".tab");if(b)showPanel(b.dataset.p)};
+  var cl=function(e){var b=e.target.closest("button[data-a]");if(b&&!b.disabled)doAct(b.dataset.a,b.dataset.id,b)};
+  $("gList").addEventListener("click",cl);$("invList").addEventListener("click",cl);
+  $("modal").addEventListener("click",function(e){if(e.target.id==="modal"||e.target.id==="mClose")return closeModal();cl(e)});
+  $("gSearch").oninput=renderGlobal;$("gFilter").onchange=renderGlobal;
+  window.addEventListener("storage",function(e){if(e.key==="fx_users")users=load("fx_users",[]);if(e.key==="fx_pool"||e.key==="fx_users")liveRefresh(true)});
+  setInterval(function(){liveRefresh()},3000);
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&openId)closeModal()});
+  $("addApp").onclick=addApp;$("addTester").onclick=addTester;$("csvBtn").onclick=exportCSV;
+  $("aSearch").oninput=renderApps;$("tSearch").oninput=renderTesters;
+  $("appList").addEventListener("click",appClick);
+  $("tBody").addEventListener("click",testerClick);
+});
+
+function showDash(){$("auth").classList.add("hidden");$("gate").classList.add("hidden");$("dash").classList.remove("hidden");loadUserData();renderAcc();renderApps();renderTesters();renderInv();showPanel("pMy")}
+
+/* APPS */
+/* ===== SHARED POOL / APP TESTING ===== */
+var GOAL_TESTERS=12,GOAL_DAYS=14,pool=[],openId=null,roleKey="",lastSig="";
+function loadPool(){pool=load("fx_pool",[])}
+function savePool(){try{localStorage.setItem("fx_pool",JSON.stringify(pool))}catch(e){toast("Storage full. Try smaller images.",1)}}
+function mut(fn){loadPool();fn();pool.forEach(sync);savePool()}
+function myApps(){return pool.filter(function(a){return a.owner===cur.email})}
+function mask(e){var p=String(e).split("@");return p[0].slice(0,2)+"***@"+(p[1]||"")}
+function who(e){return e===cur.email?"You":mask(e)}
+function ago(t){var s=Math.floor((Date.now()-t)/1000);if(s<10)return"just now";if(s<60)return s+"s ago";if(s<3600)return Math.floor(s/60)+"m ago";if(s<86400)return Math.floor(s/3600)+"h ago";return Math.floor(s/86400)+"d ago"}
+function today(){return new Date().toLocaleDateString("en-CA")}
+function joinedOf(a){return a.members.filter(function(m){return m.status==="joined"})}
+function memberOf(a,e){return a.members.filter(function(m){return m.email===e})[0]}
+function sync(a){
+  if(a.completedAt)return;
+  var j=joinedOf(a).length;
+  if(j>=GOAL_TESTERS){if(!a.startedAt)a.startedAt=Date.now()}else a.startedAt=0;
+  if(a.startedAt&&j>=GOAL_TESTERS&&Date.now()-a.startedAt>=GOAL_DAYS*864e5)a.completedAt=Date.now();
+}
+function prog(a){
+  var j=joinedOf(a).length,d=a.completedAt?GOAL_DAYS:a.startedAt?Math.min(GOAL_DAYS,Math.floor((Date.now()-a.startedAt)/864e5)):0;
+  var state=a.completedAt?"Completed":a.startedAt?"Testing":"Recruiting";
+  return{j:j,days:d,state:state,pct:Math.round(Math.min(j,GOAL_TESTERS)/GOAL_TESTERS*50+d/GOAL_DAYS*50)};
+}
+function stateTag(p){return'<span class="st '+(p.state==="Completed"?"joi":p.state==="Testing"?"tst":"inv")+'">'+p.state+'</span>'}
+function barHTML(a){var p=prog(a);return'<div class="bar"><i style="width:'+p.pct+'%"></i></div><p style="margin:6px 0 2px">'+p.j+'/'+GOAL_TESTERS+' testers · day '+p.days+'/'+GOAL_DAYS+'</p>'}
+function imgHTML(a){return a.img?'<img src="'+esc(normImg(a.img))+'" alt="" referrerpolicy="no-referrer" loading="lazy" onerror="this.remove()">':"APP"}
+function bt(c,k,id,l){return'<button class="btn '+c+'" data-a="'+k+'" data-id="'+id+'">'+l+'</button>'}
+function migrate(){
+  loadPool();var old=load(K("fx_apps"),[]);
+  if(old.length){
+    old.forEach(function(a){if(!pool.some(function(p){return p.id===a.id}))pool.push({id:a.id,owner:cur.email,name:a.name,ver:a.ver,img:a.img,play:a.play,test:a.test,added:Date.now(),members:[],invites:[],feedback:[],startedAt:0,completedAt:0})});
+    savePool();try{localStorage.removeItem(K("fx_apps"))}catch(e){}
+  }
+}
+
+/* MY APPS */
+function addApp(){
+  var name=$("aName").value.trim(),ver=$("aVer").value.trim(),img=pendingImg||normImg($("aImg").value),play=$("aPlay").value.trim(),test=$("aTest").value.trim();
+  if(!name)return toast("Enter app/game name.",1);
+  if(img&&!okImg(img))return toast("Invalid image URL.",1);
+  if(play&&!okUrl(play))return toast("Invalid Play Store URL.",1);
+  if(test&&!okUrl(test))return toast("Invalid testing URL.",1);
+  loadPool();
+  if(myApps().some(function(a){return a.name.toLowerCase()===name.toLowerCase()}))return toast("This application already exists.",1);
+  mut(function(){pool.push({id:Date.now(),owner:cur.email,name:name,ver:ver||"1.0.0",img:img,play:play,test:test,added:Date.now(),members:[],invites:[],feedback:[],startedAt:0,completedAt:0})});
+  ["aName","aVer","aImg","aPlay","aTest"].forEach(function(i){$(i).value=""});setPending("");
+  refreshAll();toast("Application added. It is now visible in App Testing.");
+}
+function renderApps(){
+  var q=$("aSearch").value.trim().toLowerCase(),box=$("appList"),mine=myApps();
+  var list=mine.filter(function(a){return a.name.toLowerCase().indexOf(q)>-1});
+  box.innerHTML=list.length?list.map(function(a){
+    var p=prog(a);
+    return'<div class="app"><div class="atop"><div class="aimg">'+imgHTML(a)+'</div><div><h3>'+esc(a.name)+'</h3><p>Version '+esc(a.ver)+'</p>'+stateTag(p)+'</div></div>'+barHTML(a)+
+    '<div class="abtn" style="margin-top:10px">'+bt("primary","play",a.id,"▶ Play Store")+bt("success","test",a.id,"🧪 Testing")+bt("warning","rev",a.id,"⭐ Review")+bt("dark","copy",a.id,"🔗 Copy link")+bt("primary","mon",a.id,"📊 Live monitor")+bt("success","inv",a.id,"✉ Invite testers")+'</div>'+
+    bt("danger full rm","del",a.id,"🗑 Remove")+'</div>';
+  }).join(""):'<div class="empty">📱 No applications found.<br>Add your first app/game above.</div>';
+  $("appBadge").textContent=mine.length+" APPS";updateStats();
+}
+function appClick(e){var b=e.target.closest("button[data-a]");if(b)doAct(b.dataset.a,b.dataset.id,b)}
+
+/* APP TESTING (everyone's apps) */
+function renderGlobal(){
+  var q=$("gSearch").value.trim().toLowerCase(),f=$("gFilter").value;
+  var list=pool.filter(function(a){
+    var p=prog(a),m=memberOf(a,cur.email);
+    if(q&&a.name.toLowerCase().indexOf(q)<0&&a.owner.toLowerCase().indexOf(q)<0)return false;
+    if(f==="mine")return a.owner===cur.email;
+    if(f==="joined")return m&&m.status==="joined";
+    if(f==="open")return a.owner!==cur.email&&!a.completedAt&&p.j<GOAL_TESTERS;
+    return true;
+  });
+  $("allBadge").textContent=pool.length+" APPS";
+  $("gList").innerHTML=list.length?list.map(gCard).join(""):'<div class="empty">No apps found.</div>';
+}
+function gCard(a){
+  var p=prog(a),own=a.owner===cur.email,m=memberOf(a,cur.email),inn=!!(m&&m.status==="joined");
+  var act=own?'<button class="btn dark" disabled>Your app</button>':inn?bt("danger","leave",a.id,"Leave test"):bt("success","join",a.id,"Join &amp; test");
+  var act2=inn?bt("warning","chk",a.id,"✓ Check in today"):bt("dark","test",a.id,"🧪 Testing link");
+  return'<div class="app"><div class="atop"><div class="aimg">'+imgHTML(a)+'</div><div><h3>'+esc(a.name)+'</h3><p>v'+esc(a.ver)+' · by '+esc(who(a.owner))+'</p>'+stateTag(p)+'</div></div>'+barHTML(a)+
+  '<p>💬 '+a.feedback.length+' feedback</p><div class="abtn" style="margin-top:10px">'+bt("primary","mon",a.id,"📊 Live monitor")+act+bt("dark","play",a.id,"▶ Play Store")+act2+'</div></div>';
+}
+function renderInv(){
+  var l=[];pool.forEach(function(a){a.invites.forEach(function(i){if(i.to===cur.email&&i.status==="pending")l.push({a:a,i:i})})});
+  $("invBadge").textContent=l.length;$("invDot").classList.toggle("hidden",!l.length);
+  $("invList").innerHTML=l.length?l.map(function(x){
+    return'<div class="irow"><div><b>'+esc(x.a.name)+'</b><p style="color:var(--mu);font-size:11px;margin-top:3px">Invited by '+esc(who(x.a.owner))+' · '+ago(x.i.at)+'</p></div><div class="act">'+bt("c2","accept",x.a.id,"Accept &amp; join")+bt("c1","mon",x.a.id,"View")+bt("c3","decline",x.a.id,"Decline")+'</div></div>';
+  }).join(""):'<div class="empty" style="padding:18px">No pending invitations.</div>';
+}
+function showPanel(id){
+  ["pMy","pTest","pAcc"].forEach(function(p){$(p).classList.toggle("hidden",p!==id)});
+  document.querySelectorAll(".ptabs .tab").forEach(function(t){t.classList.toggle("on",t.dataset.p===id)});
+  loadPool();if(id==="pTest"){renderGlobal();renderInv()}if(id==="pMy")renderApps();
+}
+function refreshAll(){
+  loadPool();renderApps();
+  if(!$("pTest").classList.contains("hidden"))renderGlobal();
+  renderInv();if(openId)renderModal();
+}
+function raw(){try{return localStorage.getItem("fx_pool")||""}catch(e){return""}}
+function liveRefresh(force){
+  if(!cur||$("dash").classList.contains("hidden"))return;
+  loadPool();var ch=false;
+  pool.forEach(function(a){var s=a.startedAt,c=a.completedAt;sync(a);if(s!==a.startedAt||c!==a.completedAt)ch=true});
+  if(ch)savePool();
+  var sig=raw()+"|"+Math.floor(Date.now()/60000);
+  if(force||ch||sig!==lastSig){lastSig=sig;renderApps();if(!$("pTest").classList.contains("hidden"))renderGlobal();renderInv()}
+  if(openId)renderModal();
+}
+
+/* ACTIONS */
+function doAct(k,id,b){
+  loadPool();var a=find(pool,id);if(!a)return toast("App not found.",1);
+  var own=a.owner===cur.email,m;
+  switch(k){
+  case"mon":case"inv":return openMonitor(id);
+  case"play":case"rev":
+    if(!a.play)return toast("Play Store link is not available.",1);
+    if(own&&k==="play"){stats.play++;save();updateStats()}
+    return openUrl(a.play);
+  case"test":
+    if(!a.test)return toast("Testing link is not available.",1);
+    if(own){stats.test++;save();updateStats()}
+    return openUrl(a.test);
+  case"copy":if(!a.play)return toast("Play Store link is not available.",1);return copy(a.play);
+  case"del":
+    if(!own)return;if(!confirm("Remove this application and its testing data?\n\n"+a.name))return;
+    mut(function(){pool=pool.filter(function(x){return x.id!==a.id})});if(openId===a.id)closeModal();toast("Application removed.");break;
+  case"join":case"accept":
+    if(own)return toast("You cannot join your own app.",1);
+    mut(function(){var x=find(pool,id),mm=memberOf(x,cur.email);if(mm)mm.status="joined";else x.members.push({email:cur.email,status:"joined",at:Date.now(),checkins:[]});x.invites.forEach(function(i){if(i.to===cur.email&&i.status==="pending")i.status="accepted"})});
+    toast("You joined the closed test.");if(a.test)openUrl(a.test);break;
+  case"leave":
+    mut(function(){var x=find(pool,id);x.members=x.members.filter(function(y){return y.email!==cur.email})});toast("You left the test.");break;
+  case"decline":
+    mut(function(){find(pool,id).invites.forEach(function(i){if(i.to===cur.email&&i.status==="pending")i.status="declined"})});toast("Invitation declined.");break;
+  case"chk":
+    m=memberOf(a,cur.email);if(!m||m.status!=="joined")return toast("Join the test first.",1);
+    if(m.checkins.indexOf(today())>-1)return toast("You already checked in today.");
+    mut(function(){memberOf(find(pool,id),cur.email).checkins.push(today())});toast("Checked in for today.");break;
+  case"rm":
+    if(!own)return;mut(function(){var x=find(pool,id);x.members=x.members.filter(function(y){return y.email!==b.dataset.e})});toast("Tester removed.");break;
+  case"res":
+    if(!own)return;mut(function(){find(pool,id).feedback.forEach(function(f){if(String(f.id)===b.dataset.f)f.resolved=!f.resolved})});break;
+  case"invsend":
+    var em=$("iMail").value.trim().toLowerCase();
+    if(!own)return;if(!okMail(em))return toast("Enter a valid email.",1);
+    if(em===cur.email)return toast("You cannot invite yourself.",1);
+    if(memberOf(a,em)||a.invites.some(function(i){return i.to===em&&i.status==="pending"}))return toast("Already invited or joined.",1);
+    mut(function(){find(pool,id).invites.push({to:em,at:Date.now(),status:"pending"})});$("iMail").value="";
+    toast(users.some(function(u){return u.email===em})?"Invitation sent.":"Invitation saved. The user must sign up with this email.");break;
+  case"fbsend":
+    m=memberOf(a,cur.email);if(own||!m||m.status!=="joined")return toast("Join the test to send feedback.",1);
+    var tx=$("fText").value.trim(),rt=parseInt($("fRate").value,10),ty=$("fType").value;
+    if(tx.length<5)return toast("Write at least 5 characters.",1);
+    mut(function(){find(pool,id).feedback.push({id:Date.now(),by:cur.email,rating:rt,type:ty,text:tx.slice(0,500),at:Date.now(),resolved:false})});
+    $("fText").value="";toast("Feedback sent. Thank you!");break;
+  }
+  refreshAll();
+}
+
+/* LIVE MONITOR MODAL */
+function openMonitor(id){openId=id;roleKey="";$("modal").classList.remove("hidden");renderModal()}
+function closeModal(){openId=null;$("modal").classList.add("hidden")}
+function renderModal(){
+  if(!openId)return;loadPool();var a=find(pool,openId);if(!a){closeModal();return}
+  var p=prog(a),own=a.owner===cur.email,m=memberOf(a,cur.email),inn=!!(m&&m.status==="joined");
+  var jl=joinedOf(a),td=today(),pend=a.invites.filter(function(i){return i.status==="pending"});
+  var chT=jl.filter(function(x){return x.checkins.indexOf(td)>-1}).length;
+  var rated=a.feedback.filter(function(f){return f.rating});
+  var avg=rated.length?(rated.reduce(function(s,f){return s+f.rating},0)/rated.length).toFixed(1):"–";
+  var openIssues=a.feedback.filter(function(f){return(f.type==="Bug"||f.type==="Crash")&&!f.resolved}).length;
+  $("mTitle").textContent=a.name;
+  var msg=p.state==="Completed"?"✅ Closed testing completed.":p.state==="Testing"?"Day "+p.days+" of "+GOAL_DAYS+". Keep at least "+GOAL_TESTERS+" testers joined until the end.":"Need "+Math.max(0,GOAL_TESTERS-p.j)+" more tester(s) to start the "+GOAL_DAYS+"-day test.";
+  var h='<div class="atop"><div class="aimg">'+imgHTML(a)+'</div><div><h3>'+esc(a.name)+' <small style="color:var(--mu)">v'+esc(a.ver)+'</small></h3><p>by '+esc(who(a.owner))+'</p>'+stateTag(p)+' <span class="live">● LIVE · '+new Date().toLocaleTimeString()+'</span></div></div>'+
+  '<div class="msg">'+msg+'</div>'+
+  '<label>Testers '+p.j+'/'+GOAL_TESTERS+'</label><div class="bar"><i style="width:'+Math.min(100,p.j/GOAL_TESTERS*100)+'%"></i></div>'+
+  '<label style="margin-top:10px">Days '+p.days+'/'+GOAL_DAYS+'</label><div class="bar"><i style="width:'+p.days/GOAL_DAYS*100+'%"></i></div>'+
+  '<div class="acc" style="margin:14px 0"><div><small>JOINED</small><b>'+p.j+'</b></div><div><small>INVITED (PENDING)</small><b>'+pend.length+'</b></div><div><small>CHECK-INS TODAY</small><b>'+chT+'/'+p.j+'</b></div><div><small>FEEDBACK</small><b>'+a.feedback.length+'</b></div><div><small>AVG RATING</small><b>'+avg+(rated.length?" ★":"")+'</b></div><div><small>OPEN BUGS</small><b>'+openIssues+'</b></div></div>'+
+  '<div class="abtn">'+bt("dark","play",a.id,"▶ Play Store")+bt("dark","test",a.id,"🧪 Testing link")+(own?"":inn?bt("warning","chk",a.id,"✓ Check in today")+bt("danger","leave",a.id,"Leave test"):bt("success","join",a.id,"Join &amp; test"))+'</div>'+
+  '<div class="sec">👥 Testers</div><div class="tw"><table><thead><tr><th>Tester</th><th>Status</th><th>Joined</th><th>Check-ins</th><th>Last</th>'+(own?'<th></th>':'')+'</tr></thead><tbody>'+
+  (jl.length?jl.map(function(x){return'<tr><td>'+esc(own?x.email:who(x.email))+'</td><td><span class="st joi">Joined</span></td><td>'+ago(x.at)+'</td><td>'+x.checkins.length+'</td><td>'+(x.checkins.length?esc(x.checkins[x.checkins.length-1]):"–")+'</td>'+(own?'<td><button class="btn danger" style="padding:5px 9px;font-size:10px" data-a="rm" data-id="'+a.id+'" data-e="'+esc(x.email)+'">Remove</button></td>':'')+'</tr>'}).join(""):'<tr><td colspan="6" style="color:var(--mu)">No testers yet.</td></tr>')+'</tbody></table></div>'+
+  (own&&pend.length?'<div class="msg">Pending invites: '+pend.map(function(i){return esc(i.to)}).join(", ")+'</div>':'');
+  var types=["Bug","Crash","Suggestion","Praise"];
+  h+='<div class="sec">💬 Feedback monitor</div><div class="pills">'+types.map(function(t){return'<span class="pill">'+t+' '+a.feedback.filter(function(f){return f.type===t}).length+'</span>'}).join("")+'<span class="pill">Resolved '+a.feedback.filter(function(f){return f.resolved}).length+'</span></div>';
+  h+=a.feedback.length?a.feedback.slice().reverse().map(function(f){
+    return'<div class="fbi"><div class="m"><span class="star">'+"★".repeat(f.rating)+"☆".repeat(5-f.rating)+'</span><span class="st '+(f.type==="Praise"?"joi":f.type==="Suggestion"?"tst":"inv")+'">'+esc(f.type)+'</span><span>'+esc(who(f.by))+' · '+ago(f.at)+'</span>'+(f.resolved?'<span class="st joi">Resolved</span>':'')+(own?'<button class="btn dark" style="padding:4px 9px;font-size:10px" data-a="res" data-id="'+a.id+'" data-f="'+f.id+'">'+(f.resolved?"Reopen":"Mark resolved")+'</button>':'')+'</div>'+esc(f.text)+'</div>';
+  }).join(""):'<div class="empty" style="padding:18px">No feedback yet.</div>';
+  $("mMon").innerHTML=h;
+  var rk=a.id+(own?"o":inn?"m":"v");
+  if(rk!==roleKey){
+    roleKey=rk;
+    $("mForm").innerHTML=own?'<div class="sec">✉️ Invite a tester</div><div class="ph"><input id="iMail" type="email" placeholder="friend@gmail.com">'+bt("primary","invsend",a.id,"Send invite")+'</div><div class="note" style="margin:8px 0 0;text-align:left">They will see it under App Testing → My Invitations after signing in with this email.</div>':
+    inn?'<div class="sec">📝 Send feedback</div><div class="grid2"><div><label>Rating</label><select id="fRate"><option value="5">★★★★★ Excellent</option><option value="4">★★★★☆ Good</option><option value="3">★★★☆☆ OK</option><option value="2">★★☆☆☆ Poor</option><option value="1">★☆☆☆☆ Bad</option></select></div><div><label>Type</label><select id="fType"><option>Bug</option><option>Crash</option><option>Suggestion</option><option>Praise</option></select></div><div class="span"><label>Your feedback</label><textarea id="fText" rows="3" maxlength="500" placeholder="What did you find while testing?"></textarea></div>'+bt("primary span","fbsend",a.id,"Send feedback")+'</div>':
+    '<div class="msg">Join this test to send feedback.</div>';
+  }
+}
+
+/* TESTERS */
+function addTester(){
+  var n=$("tName").value.trim(),m=$("tMail").value.trim().toLowerCase();
+  if(n.length<2)return toast("Enter tester name.",1);
+  if(!okMail(m))return toast("Enter a valid email.",1);
+  if(testers.some(function(t){return t.email===m}))return toast("This tester already exists.",1);
+  testers.push({id:Date.now()+Math.random(),name:n,email:m,status:"Invited",added:new Date().toLocaleDateString()});
+  save();$("tName").value="";$("tMail").value="";renderTesters();toast("Tester added.");
+}
+function renderTesters(){
+  var q=$("tSearch").value.trim().toLowerCase();
+  var list=testers.filter(function(t){return t.name.toLowerCase().indexOf(q)>-1||t.email.indexOf(q)>-1});
+  $("tBody").innerHTML=list.length?list.map(function(t){
+    var j=t.status==="Joined";
+    return '<tr><td>'+esc(t.name)+'</td><td class="em">'+esc(t.email)+'</td><td><span class="st '+(j?"joi":"inv")+'">'+esc(t.status)+'</span></td>'+
+    '<td><div class="act"><button class="c1" data-a="copy" data-id="'+t.id+'">Copy</button>'+
+    (j?"":'<button class="c2" data-a="join" data-id="'+t.id+'">Joined</button>')+
+    '<button class="c3" data-a="del" data-id="'+t.id+'">Delete</button></div></td></tr>';
+  }).join(""):'<tr><td colspan="4" class="empty" style="border:0">No testers found.</td></tr>';
+  updateStats();
+}
+function testerClick(e){
+  var b=e.target.closest("button");if(!b)return;
+  var t=find(testers,b.dataset.id);if(!t)return;
+  var k=b.dataset.a;
+  if(k==="copy")copy(t.email);
+  else if(k==="join"){t.status="Joined";save();renderTesters();toast("Marked as joined.")}
+  else if(k==="del"){
+    if(!confirm("Delete tester?\n\n"+t.email))return;
+    testers=testers.filter(function(x){return x!==t});save();renderTesters();toast("Tester deleted.");
+  }
+}
+
+/* STATS + CSV */
+function updateStats(){
+  var j=testers.filter(function(t){return t.status==="Joined"}).length;
+  $("sApps").textContent=myApps().length;$("sTest").textContent=testers.length;
+  $("sInv").textContent=testers.length-j;$("sJoin").textContent=j;
+  $("sPlay").textContent=stats.play;$("sTestOpen").textContent=stats.test;
+  $("tBadge").textContent=testers.length;
+}
+function exportCSV(){
+  if(!testers.length)return toast("No testers to export.",1);
+  var q=function(v){return '"'+String(v).replace(/"/g,'""')+'"'};
+  var csv="Name,Email,Status,Added\n"+testers.map(function(t){return [t.name,t.email,t.status,t.added].map(q).join(",")}).join("\n");
+  var u=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+  var a=document.createElement("a");a.href=u;a.download="foros-extreme-testers.csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);
+  toast("CSV downloaded.");
+}
+</script>
+</body>
+</html>

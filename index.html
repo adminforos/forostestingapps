@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOROS EXTREME — Closed Testers</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top left,#26356f 0%,transparent 35%),
+        radial-gradient(circle at bottom right,#531d65 0%,transparent 35%),
+        #080b16;
+    color:#fff;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* ================= GATE ================= */
+
+#gate{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.gate-card{
+    width:100%;
+    max-width:520px;
+    background:rgba(18,22,40,.92);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:28px;
+    padding:35px;
+    text-align:center;
+    box-shadow:0 25px 80px rgba(0,0,0,.5);
+    backdrop-filter:blur(15px);
+}
+
+.logo{
+    width:90px;
+    height:90px;
+    margin:0 auto 20px;
+    border-radius:25px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    font-weight:900;
+    background:linear-gradient(135deg,#6c5ce7,#00cec9);
+    box-shadow:0 15px 40px rgba(108,92,231,.35);
+}
+
+.gate-card h1{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.gate-card p{
+    color:#aeb6ca;
+    line-height:1.7;
+    margin-bottom:25px;
+}
+
+.group-box{
+    background:#0c1020;
+    border:1px solid #29314c;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:20px;
+}
+
+.group-email{
+    color:#74e8ff;
+    font-weight:bold;
+    word-break:break-all;
+    margin-top:8px;
+}
+
+.btn{
+    border:none;
+    border-radius:13px;
+    padding:14px 20px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn-primary{
+    color:white;
+    background:linear-gradient(135deg,#6c5ce7,#00b894);
+}
+
+.btn-secondary{
+    background:#202740;
+    color:white;
+}
+
+.full{
+    width:100%;
+}
+
+.notice{
+    margin-top:15px;
+    font-size:13px;
+    color:#8791aa;
+}
+
+/* ================= APP ================= */
+
+#app{
+    min-height:100vh;
+}
+
+header{
+    height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 5%;
+    background:rgba(10,13,26,.88);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    position:sticky;
+    top:0;
+    z-index:10;
+    backdrop-filter:blur(12px);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:900;
+}
+
+.brand-logo{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#6c5ce7,#00cec9);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+}
+
+.logout{
+    background:#271d2b;
+    color:#ff8b9e;
+    border:1px solid #482634;
+    padding:9px 15px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.container{
+    width:90%;
+    max-width:1250px;
+    margin:35px auto;
+}
+
+.hero{
+    margin-bottom:30px;
+}
+
+.hero h1{
+    font-size:34px;
+    margin-bottom:8px;
+}
+
+.hero p{
+    color:#9da7be;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:#11162a;
+    border:1px solid #202941;
+    border-radius:18px;
+    padding:22px;
+}
+
+.stat small{
+    color:#8993aa;
+}
+
+.stat strong{
+    display:block;
+    font-size:30px;
+    margin-top:8px;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1.5fr;
+    gap:22px;
+}
+
+.card{
+    background:#11162a;
+    border:1px solid #202941;
+    border-radius:20px;
+    padding:23px;
+}
+
+.card h2{
+    font-size:20px;
+    margin-bottom:18px;
+}
+
+.form-group{
+    margin-bottom:14px;
+}
+
+.form-group label{
+    display:block;
+    font-size:13px;
+    color:#929bb0;
+    margin-bottom:7px;
+}
+
+input{
+    width:100%;
+    padding:13px 14px;
+    border-radius:11px;
+    border:1px solid #2a3450;
+    outline:none;
+    background:#0a0e1b;
+    color:white;
+}
+
+input:focus{
+    border-color:#6c5ce7;
+}
+
+.form-row{
+    display:flex;
+    gap:10px;
+}
+
+/* SEARCH */
+
+.search{
+    margin-bottom:15px;
+}
+
+/* TABLE */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:13px 10px;
+    border-bottom:1px solid #222b43;
+    text-align:left;
+}
+
+th{
+    color:#8792ac;
+    font-size:12px;
+    text-transform:uppercase;
+}
+
+td{
+    font-size:14px;
+}
+
+.email{
+    color:#72ddff;
+}
+
+.action-btn{
+    border:none;
+    padding:7px 9px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-right:4px;
+}
+
+.copy{
+    background:#1e2940;
+    color:#80dfff;
+}
+
+.delete{
+    background:#301d27;
+    color:#ff8096;
+}
+
+/* PLAY LINK */
+
+.play-link{
+    margin-top:20px;
+}
+
+.link-status{
+    color:#69e6b1;
+    font-size:13px;
+    margin-top:8px;
+}
+
+.empty{
+    text-align:center;
+    padding:30px;
+    color:#747e96;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#667089;
+    font-size:13px;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    header{
+        padding:0 4%;
+    }
+
+    .hero h1{
+        font-size:27px;
+    }
+
+    .container{
+        width:92%;
+    }
+}
+
+@media(max-width:500px){
+
+    .gate-card{
+        padding:25px 18px;
+    }
+
+    .gate-card h1{
+        font-size:25px;
+    }
+
+    .form-row{
+        flex-direction:column;
+    }
+
+    th:nth-child(2),
+    td:nth-child(2){
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= GROUP GATE ================= -->
+
+<section id="gate">
+
+    <div class="gate-card">
+
+        <div class="logo">
+            FX
+        </div>
+
+        <h1>FOROS EXTREME</h1>
+
+        <p>
+            Welcome to the Google Play Closed Testing Portal.
+            You must join our official Google Group before accessing
+            the tester dashboard.
+        </p>
+
+        <div class="group-box">
+
+            <div>Required Google Group</div>
+
+            <div class="group-email">
+                forosextreme@googlegroups.com
+            </div>
+
+        </div>
+
+        <button
+            class="btn btn-primary full"
+            onclick="joinGroup()">
+            JOIN GOOGLE GROUP
+        </button>
+
+        <br><br>
+
+        <button
+            class="btn btn-secondary full"
+            onclick="verifyJoin()">
+            ✓ I JOINED THE GROUP
+        </button>
+
+        <div class="notice">
+            You must join the official group before continuing.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<section id="app" class="hidden">
+
+<header>
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            FX
+        </div>
+
+        <div>
+            FOROS EXTREME
+        </div>
+
+    </div>
+
+    <button
+        class="logout"
+        onclick="logout()">
+        Logout
+    </button>
+
+</header>
+
+
+<main class="container">
+
+    <div class="hero">
+
+        <h1>Closed Testers Dashboard</h1>
+
+        <p>
+            Manage testers for your Google Play Console Closed Testing.
+        </p>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+            <small>Total Testers</small>
+            <strong id="totalTesters">0</strong>
+        </div>
+
+        <div class="stat">
+            <small>Google Group</small>
+            <strong>1</strong>
+        </div>
+
+        <div class="stat">
+            <small>Status</small>
+            <strong style="font-size:20px;color:#65e6ac">
+                ACTIVE
+            </strong>
+        </div>
+
+    </div>
+
+
+    <div class="grid">
+
+        <!-- ADD TESTER -->
+
+        <div class="card">
+
+            <h2>➕ Add Closed Tester</h2>
+
+            <div class="form-group">
+
+                <label>Tester Name</label>
+
+                <input
+                    type="text"
+                    id="testerName"
+                    placeholder="Enter tester name">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Google Account Email</label>
+
+                <input
+                    type="email"
+                    id="testerEmail"
+                    placeholder="tester@gmail.com">
+
+            </div>
+
+            <button
+                class="btn btn-primary full"
+                onclick="addTester()">
+                Add Tester
+            </button>
+
+
+            <div class="play-link">
+
+                <div class="form-group">
+
+                    <label>
+                        Google Play Closed Testing Link
+                    </label>
+
+                    <input
+                        type="url"
+                        id="playLink"
+                        placeholder="https://play.google.com/...">
+
+                </div>
+
+                <button
+                    class="btn btn-secondary full"
+                    onclick="savePlayLink()">
+                    Save Play Link
+                </button>
+
+                <div
+                    id="linkStatus"
+                    class="link-status">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TESTER LIST -->
+
+        <div class="card">
+
+            <h2>👥 Tester List</h2>
+
+            <div class="search">
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search tester..."
+                    oninput="renderTesters()">
+
+            </div>
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="testerTable">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+    © 2026 FOROS EXTREME — Google Play Closed Testing Portal
+</footer>
+
+</section>
+
+
+<script>
+
+/* =========================================
+   GOOGLE GROUP
+========================================= */
+
+const GROUP_EMAIL = "forosextreme@googlegroups.com";
+
+const GROUP_URL =
+    "https://groups.google.com/g/forosextreme";
+
+
+/* =========================================
+   STORAGE
+========================================= */
+
+let testers =
+    JSON.parse(
+        localStorage.getItem("foros_testers") || "[]"
+    );
+
+let playLink =
+    localStorage.getItem("foros_play_link") || "";
+
+
+/* =========================================
+   GROUP JOIN
+========================================= */
+
+function joinGroup(){
+
+    window.open(
+        GROUP_URL,
+        "_blank"
+    );
+
+}
+
+
+/* =========================================
+   VERIFY JOIN
+========================================= */
+
+function verifyJoin(){
+
+    /*
+       IMPORTANT:
+
+       This is only a client-side gate.
+       HTML cannot verify actual Google Group
+       membership.
+
+       Real verification requires:
+       Google OAuth + backend + Google Groups/API
+       or another server-side verification system.
+    */
+
+    const confirmed =
+        confirm(
+            "Please make sure you have joined " +
+            GROUP_EMAIL +
+            ".\n\n" +
+            "Continue to the tester dashboard?"
+        );
+
+    if(confirmed){
+
+        sessionStorage.setItem(
+            "group_gate",
+            "passed"
+        );
+
+        showDashboard();
+
+    }
+
+}
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+function showDashboard(){
+
+    document
+        .getElementById("gate")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("app")
+        .classList
+        .remove("hidden");
+
+    renderTesters();
+
+    if(playLink){
+
+        document
+            .getElementById("playLink")
+            .value = playLink;
+
+        document
+            .getElementById("linkStatus")
+            .textContent =
+            "✓ Play testing link saved";
+
+    }
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    sessionStorage.removeItem("group_gate");
+
+    location.reload();
+
+}
+
+
+/* =========================================
+   ADD TESTER
+========================================= */
+
+function addTester(){
+
+    const name =
+        document
+        .getElementById("testerName")
+        .value
+        .trim();
+
+    const email =
+        document
+        .getElementById("testerEmail")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    if(!name){
+
+        alert("Please enter tester name.");
+
+        return;
+    }
+
+
+    if(!email){
+
+        alert("Please enter tester email.");
+
+        return;
+    }
+
+
+    if(!validateEmail(email)){
+
+        alert("Please enter a valid email.");
+
+        return;
+    }
+
+
+    const exists =
+        testers.some(
+            tester =>
+            tester.email === email
+        );
+
+
+    if(exists){
+
+        alert("This email is already added.");
+
+        return;
+    }
+
+
+    testers.push({
+
+        id:Date.now(),
+
+        name:name,
+
+        email:email,
+
+        added:new Date()
+            .toLocaleDateString()
+
+    });
+
+
+    saveTesters();
+
+
+    document
+        .getElementById("testerName")
+        .value = "";
+
+    document
+        .getElementById("testerEmail")
+        .value = "";
+
+
+    renderTesters();
+
+}
+
+
+/* =========================================
+   EMAIL VALIDATION
+========================================= */
+
+function validateEmail(email){
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        .test(email);
+
+}
+
+
+/* =========================================
+   SAVE
+========================================= */
+
+function saveTesters(){
+
+    localStorage.setItem(
+        "foros_testers",
+        JSON.stringify(testers)
+    );
+
+}
+
+
+/* =========================================
+   RENDER
+========================================= */
+
+function renderTesters(){
+
+    const table =
+        document
+        .getElementById("testerTable");
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+
+    const filtered =
+        testers.filter(
+            tester =>
+                tester.name
+                .toLowerCase()
+                .includes(search)
+                ||
+                tester.email
+                .toLowerCase()
+                .includes(search)
+        );
+
+
+    table.innerHTML = "";
+
+
+    if(filtered.length === 0){
+
+        table.innerHTML =
+            `<tr>
+                <td colspan="3" class="empty">
+                    No testers found.
+                </td>
+            </tr>`;
+
+    }
+
+
+    filtered.forEach(tester => {
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>${escapeHTML(tester.name)}</td>
+
+            <td class="email">
+                ${escapeHTML(tester.email)}
+            </td>
+
+            <td>
+
+                <button
+                    class="action-btn copy"
+                    onclick="copyEmail('${escapeJS(tester.email)}')">
+                    Copy
+                </button>
+
+                <button
+                    class="action-btn delete"
+                    onclick="deleteTester(${tester.id})">
+                    Delete
+                </button>
+
+            </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+
+    document
+        .getElementById("totalTesters")
+        .textContent =
+        testers.length;
+
+}
+
+
+/* =========================================
+   DELETE
+========================================= */
+
+function deleteTester(id){
+
+    const confirmDelete =
+        confirm(
+            "Delete this tester?"
+        );
+
+    if(!confirmDelete) return;
+
+
+    testers =
+        testers.filter(
+            tester =>
+            tester.id !== id
+        );
+
+
+    saveTesters();
+
+    renderTesters();
+
+}
+
+
+/* =========================================
+   COPY EMAIL
+========================================= */
+
+async function copyEmail(email){
+
+    try{
+
+        await navigator.clipboard
+            .writeText(email);
+
+        alert(
+            "Email copied:\n" + email
+        );
+
+    }catch(error){
+
+        alert(
+            "Copy failed. Email:\n" + email
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   PLAY LINK
+========================================= */
+
+function savePlayLink(){
+
+    const link =
+        document
+        .getElementById("playLink")
+        .value
+        .trim();
+
+
+    if(!link){
+
+        alert(
+            "Please enter Google Play testing link."
+        );
+
+        return;
+    }
+
+
+    playLink = link;
+
+
+    localStorage.setItem(
+        "foros_play_link",
+        playLink
+    );
+
+
+    document
+        .getElementById("linkStatus")
+        .textContent =
+        "✓ Play testing link saved successfully.";
+
+}
+
+
+/* =========================================
+   SECURITY HELPERS
+========================================= */
+
+function escapeHTML(value){
+
+    return value
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeJS(value){
+
+    return value
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'");
+
+}
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        if(
+            sessionStorage.getItem(
+                "group_gate"
+            ) === "passed"
+        ){
+
+            showDashboard();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
